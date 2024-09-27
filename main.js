@@ -6,7 +6,7 @@
             { week: 2, title: 'Enlace a GitHub 3', url: 'https://github.com/usuario/repo3', type: 'github' },
             { week: 2, title: 'PDF de la semana 2', url: '/PDFs/Actividad02_AWM.pdf', type: 'pdf' },
             { week: 2, title: 'PDF de Infografia 2', url: '/PDFs/OliverFelixPerez.pdf', type: 'pdf' },
-            { week: 3, title: 'Enlace a GitHub 5', url: 'https://github.com/usuario/repo5', type: 'github' },
+            { week: 3, title: 'Enlace a GitHub 5', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/semana3/hola-mundo.dart', type: 'github' },
             { week: 3, title: 'Enlace a GitHub 6', url: 'https://github.com/usuario/repo6', type: 'github' },
             { week: 3, title: 'PDF de la Semana 3', url: '/PDFs/Actividad03_AWM.pdf', type: 'pdf' },
         ];
