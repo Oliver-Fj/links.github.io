@@ -2,7 +2,7 @@
         let linksData = [
             { week: 1, title: 'Enlace a GitHub 1', url: 'https://github.com/usuario/repo1', type: 'github' },
             { week: 1, title: 'Enlace a GitHub 2', url: 'https://github.com/usuario/repo2', type: 'github' },
-            { week: 1, title: 'PDF de la Semana 1', url: '/ruta/al/archivo1.pdf', type: 'pdf' },
+            { week: 1, title: 'PDF de la Semana 1', url: '/PDFs/Actividad01_AWM.pdf', type: 'pdf' },
             { week: 2, title: 'Enlace a GitHub 3', url: 'https://github.com/usuario/repo3', type: 'github' },
             { week: 2, title: 'Enlace a GitHub 4', url: 'https://github.com/usuario/repo4', type: 'github' },
             { week: 2, title: 'PDF de la Semana 2', url: '/ruta/al/archivo2.pdf', type: 'pdf' },
