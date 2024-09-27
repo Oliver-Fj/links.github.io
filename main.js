@@ -2,12 +2,12 @@
         let linksData = [
             { week: 1, title: 'Enlace a GitHub 1', url: 'https://github.com/Oliver-Fj/links.github.io', type: 'github' },
             { week: 1, title: 'PDF de la Semana 1', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/Actividad01_AWM.pdf', type: 'github' },
-            { week: 1, title: 'PDF de Infografia 1', url: '/PDFs/OliverFelixPerez.pdf', type: 'pdf' },
-            { week: 2, title: 'Enlace a GitHub 3', url: 'https://github.com/usuario/repo3', type: 'github' },
+            { week: 1, title: 'PDF de Infografia 1', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/OliverFelixPerez.pdf', type: 'pdf' },
+            { week: 2, title: 'Enlace a GitHub 3', url: 'https://github.com/Oliver-Fj/links.github.io', type: 'github' },
             { week: 2, title: 'PDF de la semana 2', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/Actividad02_AWM.pdf', type: 'github' },
-            { week: 2, title: 'PDF de Infografia 2', url: '/PDFs/OliverFelixPerez.pdf', type: 'pdf' },
+            { week: 2, title: 'PDF de Infografia 2', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/OliverFelixPerez.pdf', type: 'pdf' },
             { week: 3, title: 'Enlace a GitHub 5', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/semana3/hola-mundo.dart', type: 'github' },
-            { week: 3, title: 'Enlace a GitHub 6', url: 'https://github.com/usuario/repo6', type: 'github' },
+            { week: 3, title: 'Enlace a GitHub 6', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/semana3/hola-mundo.dart', type: 'github' },
             { week: 3, title: 'PDF de la Semana 3', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/Actividad03_AWM.pdf', type: 'github' },
         ];
 
