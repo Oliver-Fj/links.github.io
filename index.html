@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de links</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <h1>Organizador de Enlaces by Oliver</h1>
+            <button id="themeToggle">🌓</button>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Buscar enlaces...">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="github">GitHub</button>
+            <button class="filter-btn" data-filter="pdf">PDF</button>
+        </div>
+        
+        <div id="weekContainer">
+            <!-- Las secciones de semanas se generarán dinámicamente con JavaScript -->
+        </div>
+
+        <form id="addLinkForm">
+            <h3>Agregar nuevo enlace</h3>
+            <input type="text" id="newLinkTitle" placeholder="Título del enlace" required>
+            <input type="url" id="newLinkUrl" placeholder="URL del enlace" required>
+            <select id="newLinkType">
+                <option value="github">GitHub</option>
+                <option value="pdf">PDF</option>
+            </select>
+            <select id="newLinkWeek">
+                <option value="1">Semana 1</option>
+                <option value="2">Semana 2</option>
+                <option value="3">Semana 3</option>
+            </select>
+            <button type="submit">Agregar enlace</button>
+        </form>
+
+        <div id="totalLinkCount"></div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+
+</html>
