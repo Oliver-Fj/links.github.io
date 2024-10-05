@@ -1,142 +1,285 @@
-        // Datos de ejemplo
-        let linksData = [
-            { week: 1, title: 'Enlace a GitHub 1', url: 'https://github.com/usuario/repo1', type: 'github' },
-            { week: 1, title: 'PDF de la Semana 1', url: '/PDFs/Actividad01_AWM.pdf', type: 'pdf' },
-            { week: 1, title: 'PDF de Infografia 1', url: '/PDFs/OliverFelixPerez.pdf', type: 'pdf' },
-            { week: 2, title: 'Enlace a GitHub 3', url: 'https://github.com/usuario/repo3', type: 'github' },
-            { week: 2, title: 'PDF de la semana 2', url: '/PDFs/Actividad02_AWM.pdf', type: 'pdf' },
-            { week: 2, title: 'PDF de Infografia 2', url: '/PDFs/OliverFelixPerez.pdf', type: 'pdf' },
-            { week: 3, title: 'Enlace a GitHub 5', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/semana3/hola-mundo.dart', type: 'github' },
-            { week: 3, title: 'Enlace a GitHub 6', url: 'https://github.com/usuario/repo6', type: 'github' },
-            { week: 3, title: 'PDF de la Semana 3', url: '/PDFs/Actividad03_AWM.pdf', type: 'pdf' },
+class LinkManager {
+    constructor() {
+        this.links = JSON.parse(localStorage.getItem('links')) || [];
+        this.weeks = JSON.parse(localStorage.getItem('weeks')) || [
+            { id: 1, name: 'Semana 1', isCollapsed: false },
+            { id: 2, name: 'Semana 2', isCollapsed: true },
+            { id: 3, name: 'Semana 3', isCollapsed: true }
         ];
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.programmingIcons = [
+            'fa-code',
+            'fa-terminal',
+            'fa-bug',
+            'fa-laptop-code',
+            'fa-database',
+            'fa-microchip',
+            'fa-code-branch'
+        ];
+        this.neonColors = ['btn-neon-purple', 'btn-neon-blue', 'btn-neon-green'];
+        this.initializeElements();
+        this.setupEventListeners();
+        this.initializeTheme();
+        this.renderWeeks();
+    }
 
-        function renderLinks() {
-            const weekContainer = document.getElementById('weekContainer');
-            weekContainer.innerHTML = '';
+    initializeElements() {
+        // Botones y modales
+        this.addWeekBtn = document.getElementById('addWeekBtn');
+        this.addLinkBtn = document.getElementById('addLinkBtn');
+        this.linkModal = document.getElementById('linkModal');
+        this.closeModal = document.querySelector('.close');
+        this.linkForm = document.getElementById('linkForm');
+        this.weeksContainer = document.getElementById('weeksContainer');
+        this.themeToggle = document.getElementById('themeToggle');
+        this.searchInput = document.getElementById('searchInput');
+        this.noResults = document.getElementById('noResults');
+        
+        // Campos del formulario
+        this.linkTitleInput = document.getElementById('linkTitle');
+        this.linkUrlInput = document.getElementById('linkUrl');
+        this.linkWeekSelect = document.getElementById('linkWeek');
 
-            const weeks = [...new Set(linksData.map(link => link.week))];
-            weeks.forEach(week => {
-                const weekLinks = linksData.filter(link => link.week === week);
-                const weekSection = document.createElement('div');
-                weekSection.className = 'week-section';
-                weekSection.innerHTML = `
-                    <div class="week-header">
-                        <span>Semana ${week}</span>
-                        <span class="link-count">${weekLinks.length} enlaces</span>
-                    </div>
-                    <div class="week-content">
-                        <div class="dropdown">
-                            ${weekLinks.map(link => `
-                                <a href="${link.url}" class="dropdown-item" data-type="${link.type}" target="_blank">${link.title}</a>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                weekContainer.appendChild(weekSection);
-            });
+        // Aplicar estilos neón a los botones principales
+        this.addWeekBtn.classList.add('btn-neon-purple');
+        this.addLinkBtn.classList.add('btn-neon-blue');
+    }
 
-            // Reinicializar los event listeners
-            initializeEventListeners();
-            updateTotalLinkCount();
-        }
-
-        function initializeEventListeners() {
-            document.querySelectorAll('.week-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    header.nextElementSibling.classList.toggle('active');
-                });
-            });
-        }
-
-        function updateTotalLinkCount() {
-            const totalCount = linksData.length;
-            document.getElementById('totalLinkCount').textContent = `Total de enlaces: ${totalCount}`;
-        }
-
-        // Funcionalidad de búsqueda
-        const searchBar = document.getElementById('searchBar');
-        searchBar.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            document.querySelectorAll('.dropdown-item').forEach(item => {
-                const text = item.textContent.toLowerCase();
-                const weekSection = item.closest('.week-section');
-                if (text.includes(searchTerm)) {
-                    item.classList.remove('hidden');
-                    weekSection.style.display = 'block';
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-
-            document.querySelectorAll('.week-section').forEach(section => {
-                const visibleItems = section.querySelectorAll('.dropdown-item:not(.hidden)');
-                if (visibleItems.length === 0) {
-                    section.style.display = 'none';
-                } else {
-                    section.style.display = 'block';
-                }
-                section.querySelector('.link-count').textContent = `${visibleItems.length} enlaces`;
-            });
-        });
-
-        // Cambio de tema
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
-            if (document.body.classList.contains('dark-theme')) {
-                document.documentElement.style.setProperty('--bg-color', '#333');
-                document.documentElement.style.setProperty('--text-color', '#f4f4f4');
-                document.documentElement.style.setProperty('--dropdown-bg', '#444');
-                document.documentElement.style.setProperty('--dropdown-hover', '#555');
-                document.documentElement.style.setProperty('--border-color', '#666');
-                themeToggle.textContent = '☀️';
-            } else {
-                document.documentElement.style.setProperty('--bg-color', '#f4f4f4');
-                document.documentElement.style.setProperty('--text-color', '#333');
-                document.documentElement.style.setProperty('--dropdown-bg', '#f9f9f9');
-                document.documentElement.style.setProperty('--dropdown-hover', '#e9e9e9');
-                document.documentElement.style.setProperty('--border-color', '#ddd');
-                themeToggle.textContent = '🌓';
+    setupEventListeners() {
+        this.addWeekBtn.addEventListener('click', () => this.createNewWeek());
+        this.addLinkBtn.addEventListener('click', () => this.openModal());
+        this.closeModal.addEventListener('click', () => this.closeModalHandler());
+        this.linkForm.addEventListener('submit', (e) => this.handleLinkSubmit(e));
+        this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        this.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === this.linkModal) {
+                this.closeModalHandler();
             }
         });
+    }
 
-        // Filtrado por tipo
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const filter = this.getAttribute('data-filter');
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+    toggleWeekCollapse(weekId) {
+        const week = this.weeks.find(w => w.id === weekId);
+        if (week) {
+            week.isCollapsed = !week.isCollapsed;
+            this.saveWeeks();
+            this.renderWeeks();
+        }
+    }
 
-                document.querySelectorAll('.dropdown-item').forEach(item => {
-                    if (filter === 'all' || item.getAttribute('data-type') === filter) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+    createWeekElement(week, links) {
+        const weekContainer = document.createElement('div');
+        weekContainer.className = 'week-container';
+        
+        const weekHeader = document.createElement('div');
+        weekHeader.className = 'week-header';
+        weekHeader.onclick = () => this.toggleWeekCollapse(week.id);
+        
+        const weekTitle = document.createElement('div');
+        weekTitle.className = 'week-title';
+        
+        const titleText = document.createElement('h2');
+        titleText.textContent = week.name;
+        
+        const collapseIcon = document.createElement('i');
+        collapseIcon.className = `fas fa-chevron-${week.isCollapsed ? 'down' : 'up'} ml-2`;
+        
+        weekTitle.appendChild(titleText);
+        weekTitle.appendChild(collapseIcon);
 
-                document.querySelectorAll('.week-section').forEach(section => {
-                    const visibleItems = section.querySelectorAll('.dropdown-item[style="display: block"]');
-                    section.querySelector('.link-count').textContent = `${visibleItems.length} enlaces`;
-                    section.style.display = visibleItems.length > 0 ? 'block' : 'none';
-                });
+        const iconsContainer = document.createElement('div');
+        iconsContainer.className = 'week-icons';
+        
+        for (let i = 0; i < week.id; i++) {
+            const icon = document.createElement('i');
+            icon.className = `fas ${this.programmingIcons[i % this.programmingIcons.length]}`;
+            iconsContainer.appendChild(icon);
+        }
+        
+        weekHeader.appendChild(weekTitle);
+        weekHeader.appendChild(iconsContainer);
+        
+        const weekContent = document.createElement('div');
+        weekContent.className = `week-content ${week.isCollapsed ? '' : 'active'}`;
+        
+        const linksGrid = document.createElement('div');
+        linksGrid.className = 'links-grid';
+        
+        links.forEach(link => {
+            const linkCard = this.createLinkCard(link);
+            linksGrid.appendChild(linkCard);
+        });
+        
+        weekContent.appendChild(linksGrid);
+        weekContainer.appendChild(weekHeader);
+        weekContainer.appendChild(weekContent);
+        
+        return weekContainer;
+    }
+
+    createLinkCard(link) {
+        const card = document.createElement('div');
+        card.className = 'link-card';
+        
+        const title = document.createElement('h3');
+        title.className = 'link-title';
+        title.textContent = link.title;
+        
+        const button = document.createElement('button');
+        button.className = `link-button ${this.neonColors[link.id % this.neonColors.length]}`;
+        button.textContent = 'Ir al enlace';
+        button.onclick = () => window.open(link.url, '_blank');
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Eliminar';
+        deleteBtn.onclick = (e) => {
+            e.stopPropagation();
+            this.deleteLink(link.id);
+        };
+        
+        card.appendChild(title);
+        card.appendChild(button);
+        card.appendChild(deleteBtn);
+        
+        // Agregar efecto hover dinámico
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px) rotate(1deg)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) rotate(0)';
+        });
+        
+        return card;
+    }
+
+    // Resto de métodos existentes sin cambios...
+    initializeTheme() {
+        document.documentElement.setAttribute('data-theme', this.currentTheme);
+        this.updateThemeIcon();
+    }
+
+    toggleTheme() {
+        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', this.currentTheme);
+        localStorage.setItem('theme', this.currentTheme);
+        this.updateThemeIcon();
+    }
+
+    updateThemeIcon() {
+        const icon = this.themeToggle.querySelector('i');
+        icon.className = this.currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    createNewWeek() {
+        const newWeekId = this.weeks.length + 1;
+        const newWeek = {
+            id: newWeekId,
+            name: `Semana ${newWeekId}`,
+            isCollapsed: false
+        };
+        
+        this.weeks.push(newWeek);
+        this.saveWeeks();
+        this.renderWeeks();
+        this.updateWeekSelect();
+    }
+
+    openModal() {
+        this.linkModal.style.display = 'block';
+        this.updateWeekSelect();
+    }
+
+    closeModalHandler() {
+        this.linkModal.style.display = 'none';
+        this.linkForm.reset();
+    }
+
+    updateWeekSelect() {
+        this.linkWeekSelect.innerHTML = '';
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Selecciona una semana';
+        this.linkWeekSelect.appendChild(defaultOption);
+
+        this.weeks.forEach(week => {
+            const option = document.createElement('option');
+            option.value = week.id;
+            option.textContent = week.name;
+            this.linkWeekSelect.appendChild(option);
+        });
+    }
+
+    handleLinkSubmit(e) {
+        e.preventDefault();
+        
+        const newLink = {
+            id: Date.now(),
+            title: this.linkTitleInput.value,
+            url: this.linkUrlInput.value,
+            weekId: parseInt(this.linkWeekSelect.value)
+        };
+
+        this.links.push(newLink);
+        this.saveLinks();
+        this.renderWeeks();
+        this.closeModalHandler();
+    }
+
+    deleteLink(linkId) {
+        this.links = this.links.filter(link => link.id !== linkId);
+        this.saveLinks();
+        this.renderWeeks();
+    }
+
+    handleSearch(searchTerm) {
+        searchTerm = searchTerm.toLowerCase();
+        let foundAnyResults = false;
+
+        document.querySelectorAll('.week-container').forEach(weekContainer => {
+            const links = weekContainer.querySelectorAll('.link-card');
+            let foundInWeek = false;
+
+            links.forEach(link => {
+                const title = link.querySelector('.link-title').textContent.toLowerCase();
+                const matches = title.includes(searchTerm);
+                
+                link.style.display = matches ? 'block' : 'none';
+                if (matches) {
+                    foundInWeek = true;
+                    foundAnyResults = true;
+                }
             });
+
+            weekContainer.style.display = foundInWeek ? 'block' : 'none';
         });
 
-        // Agregar nuevo enlace
-        document.getElementById('addLinkForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const newLink = {
-                week: parseInt(document.getElementById('newLinkWeek').value),
-                title: document.getElementById('newLinkTitle').value,
-                url: document.getElementById('newLinkUrl').value,
-                type: document.getElementById('newLinkType').value
-            };
-            linksData.push(newLink);
-            renderLinks();
-            this.reset();
-        });
+        this.noResults.style.display = foundAnyResults ? 'none' : 'block';
+    }
 
-        // Inicializar la página
-        renderLinks();
+    renderWeeks() {
+        this.weeksContainer.innerHTML = '';
+        
+        this.weeks.forEach(week => {
+            const weekLinks = this.links.filter(link => link.weekId === week.id);
+            const weekElement = this.createWeekElement(week, weekLinks);
+            this.weeksContainer.appendChild(weekElement);
+        });
+    }
+
+    saveLinks() {
+        localStorage.setItem('links', JSON.stringify(this.links));
+    }
+
+    saveWeeks() {
+        localStorage.setItem('weeks', JSON.stringify(this.weeks));
+    }
+}
+
+// Inicializar la aplicación
+document.addEventListener('DOMContentLoaded', () => {
+    new LinkManager();
+});
