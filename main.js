@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class LinkManager {
     constructor() {
         this.links = JSON.parse(localStorage.getItem('links')) || [];
@@ -5,6 +6,19 @@ class LinkManager {
             { id: 1, name: 'Semana 1', isCollapsed: false },
             { id: 2, name: 'Semana 2', isCollapsed: true },
             { id: 3, name: 'Semana 3', isCollapsed: true }
+=======
+        // Datos de ejemplo
+        let linksData = [
+            { week: 1, title: 'Enlace a GitHub 1', url: 'https://github.com/Oliver-Fj/links.github.io', type: 'github' },
+            { week: 1, title: 'PDF de la Semana 1', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/Actividad01_AWM.pdf', type: 'github' },
+            { week: 1, title: 'PDF de Infografia 1', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/OliverFelixPerez.pdf', type: 'github' },
+            { week: 2, title: 'Enlace a GitHub 2', url: 'https://github.com/Oliver-Fj/links.github.io', type: 'github' },
+            { week: 2, title: 'PDF de la semana 2', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/Actividad02_AWM.pdf', type: 'github' },
+            { week: 2, title: 'PDF de Infografia 2', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/OliverFelixPerez.pdf', type: 'github' },
+            { week: 3, title: 'Enlace a GitHub 3', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/semana3/hola-mundo.dart', type: 'github' },
+            { week: 3, title: 'PDF de la semana 3', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/semana3/hola-mundo.dart', type: 'github' },
+            { week: 3, title: 'PDF de la infografia 3', url: 'https://github.com/Oliver-Fj/links.github.io/blob/main/PDFs/Actividad03_AWM.pdf', type: 'github' },
+>>>>>>> 21d9d778693e56e68f736fceadab6efdb9a28858
         ];
         this.currentTheme = localStorage.getItem('theme') || 'light';
         this.programmingIcons = [

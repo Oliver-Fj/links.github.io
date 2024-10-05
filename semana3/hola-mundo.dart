@@ -3,7 +3,7 @@ import 'dart:math';
 
 class Cilindro{
   final double radio;
-  finaldouble altura;
+  final double altura;
   
   Cilindro(this.radio, this.altura);
   
